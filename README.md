@@ -7,7 +7,7 @@
 - sass
 - es6
 - vue
-- vue-lic
+- vue-cli
 - vuex
 - axios
 - vant
