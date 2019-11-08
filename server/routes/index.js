@@ -121,6 +121,7 @@ router.post('/tokenKey', upload.array(), async(req, res) => {
     var { tokenKey } = req.body;
     const token = Buffer.from(tokenKey, 'base64').toString('utf8');
     let arr = JSON.stringify(token).replace(/\\|"/g, '').replace(/\{|\}/g, '').split(',')
+    console.log(arr)
     let str = await find('user', {
         tel: arr[0].split(":")[1],
         password: arr[1].split(":")[1]

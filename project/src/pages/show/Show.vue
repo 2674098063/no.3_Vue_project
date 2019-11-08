@@ -24,8 +24,8 @@
     </div>
     <div class="show_main">
       <van-tabs v-model="activeName" color="#58bc58" :sticky="!toptop">
-        <van-tab title="点餐" name="a" @click="diancan" v-if="batch_shop.menu">
-          <!-- <div class="clearfix foods_box">
+        <van-tab title="点餐" name="a" @click="diancan">
+          <div class="clearfix foods_box">
             <van-sticky :offset-top="50" :z-index="0" class="goods_nav_box">
               <van-sidebar
                 v-model="activeKey"
@@ -53,7 +53,7 @@
 
                 <div class="clearfix fr zi100" v-for="(food,i) in item.foods" :key="i">
                   <span class="goods_img fl">
-                   
+                    <!-- src="https://cube.elemecdn.com/d/90/d002c62a316875699e202edb43888jpeg.jpeg" -->
                     <img :src="menuImgurl(food.image_path)" alt @click="buyFood(index,i)" />
                   </span>
                   <div class="fl goods_main">
@@ -71,7 +71,7 @@
               </div>
             </div>
           </div>
-          <div class="empty50"></div>-->
+          <div class="empty50"></div>
         </van-tab>
         <van-tab title="推荐" name="b" @click="diancan">内容 2</van-tab>
         <van-tab title="店家详情" name="c" @click="diancan">

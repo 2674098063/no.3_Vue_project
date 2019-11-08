@@ -43,14 +43,14 @@
 <script>
 import Vue from "vue";
 import { Checkbox, CheckboxGroup } from "vant";
-
+import qs from "qs"; //用于拦截OPTIONS的请求
 Vue.use(Checkbox).use(CheckboxGroup);
 export default {
   data() {
     return {
       result: [0, 1, 2],
       checked: true,
-
+      user: null,
       foods: [...this.$store.getters.getFoods],
       istrue: true
     };
@@ -88,9 +88,32 @@ export default {
       this.load();
     },
     buyfoods() {
-      let arr = [];
-      this.$store.dispatch("setFoods", arr);
-      this.load();
+      let name = "key";
+      var strCookie = document.cookie;
+      //cookie的保存格式是 分号加空格 "; "
+      var arrCookie = strCookie.split("; ");
+      let key;
+      for (var i = 0; i < arrCookie.length; i++) {
+        var arr = arrCookie[i].split("=");
+        if (arr[0] == name && name) {
+          key = arr[1];
+          this.$axios
+            .post(
+              "http://localhost:3000/tokenKey",
+              qs.stringify({
+                tokenKey: key
+              })
+            )
+            .then(({ data }) => {
+              this.user = data;
+              let arr = [];
+              this.$store.dispatch("setFoods", arr);
+              this.load();
+            });
+        } else {
+          window.location.href = "http://localhost:8081/#/login";
+        }
+      }
     }
   },
   computed: {
