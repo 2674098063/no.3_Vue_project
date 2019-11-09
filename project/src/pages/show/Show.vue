@@ -181,28 +181,40 @@ export default {
       if (this.foods.length) {
         for (let i = 0; i < this.foods.length; i++) {
           if (this.foods[i].item_id == food.item_id) {
-            this.foods[i].number++;
+            window.console.log(this.foods[i].item_id, food.item_id);
+            this.foods[i].number += 1;
             break;
           }
-          if (i == this.foods.length - 1) {
+          if (
+            i == this.foods.length - 1 &&
+            this.foods[i].item_id != food.item_id
+          ) {
             food.number = 1;
             this.foods.push(food);
+            break;
           }
         }
       } else {
         food.number = 1;
         this.foods.push(food);
       }
-
       this.show = false;
     },
     toCart() {
-      let now = new Date().getTime();
+      // let now = new Date().getTime();
       this.$store.dispatch("setFoods", this.foods);
-      window.location.href = "http://localhost:8081/#/main/submit?" + now;
+      window.location.href = "http://localhost:8081/#/main/submit";
     }
   },
   watch: {
+    // foods: function() {
+    //   this.load();
+    // },
+    $route(to, from) {
+      if (to.name == "show" || from.name == "home") {
+        this.foods = this.$store.getters.getFoods;
+      }
+    },
     activeName(val) {
       window.scrollTo(0, 0);
       this.toptop = true;

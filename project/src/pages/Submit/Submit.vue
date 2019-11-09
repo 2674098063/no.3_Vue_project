@@ -34,7 +34,7 @@
       <br />
       <van-icon name="replay" @click="refresh" />
       <br />
-      <p class="fs12">订单有延迟，请点击上方按钮刷新页面获取最新订单</p>
+      <p class="fs12">订单若有延迟，请点击上方按钮刷新页面获取最新订单</p>
     </div>
     <van-submit-bar :price="foodstotal" class="b50" @submit="buyfoods" button-text="提交订单"></van-submit-bar>
     <div class="mb100"></div>
@@ -56,13 +56,13 @@ export default {
     };
   },
   created() {
-    this.load();
+    this.subOnLoad();
   },
   watch: {
-    $route: "load"
+    $route: "subOnLoad"
   },
   methods: {
-    load() {
+    subOnLoad() {
       this.foods = this.$store.getters.getFoods;
       if (this.foods.length) {
         this.result = this.foods.map((item, index) => {
@@ -72,7 +72,7 @@ export default {
     },
     refresh() {
       this.foods = this.$store.getters.getFoods;
-      this.load();
+      this.subOnLoad();
     },
     deletfoods(i) {
       let arr = [];
@@ -85,12 +85,13 @@ export default {
       });
       window.console.log(arr);
       this.$store.dispatch("setFoods", arr);
-      this.load();
+      this.subOnLoad();
     },
     buyfoods() {
       let name = "key";
       var strCookie = document.cookie;
       //cookie的保存格式是 分号加空格 "; "
+      this.$notify({ message: "提交中", duration: 2400 });
       var arrCookie = strCookie.split("; ");
       let key;
       for (var i = 0; i < arrCookie.length; i++) {
@@ -107,8 +108,27 @@ export default {
             .then(({ data }) => {
               this.user = data;
               let arr = [];
-              this.$store.dispatch("setFoods", arr);
-              this.load();
+              if (this.foods.length == this.result.length) {
+                this.$store.dispatch("setFoods", arr);
+              } else {
+                let arr1 = [];
+                let arr2 = this.foods.map(item => {
+                  return item;
+                });
+                for (let i = 0; i < this.result.length; i++) {
+                  let n = this.result[i];
+                  arr1.push(n);
+                }
+                arr1.sort((a, b) => {
+                  return b - a;
+                });
+                for (let i = 0; i < arr1.length; i++) {
+                  arr2.splice(arr1[i], 1);
+                }
+                this.$store.dispatch("setFoods", arr2);
+              }
+
+              this.subOnLoad();
             });
         } else {
           window.location.href = "http://localhost:8081/#/login";

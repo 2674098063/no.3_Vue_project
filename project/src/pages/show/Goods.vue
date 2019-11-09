@@ -95,7 +95,6 @@ export default {
         food.number = 1;
         this.foods.push(food);
       }
-
       this.show = false;
     }
   },
