@@ -1,5 +1,5 @@
 <template>
-  <div @load="load" @mousewheel="foodScroll">
+  <div @load="showLoad" @mousewheel="foodScroll">
     <van-icon name="arrow-left" class="return" @click="returnPage" />
     <div class="show_header">
       <div class="nav">
@@ -53,7 +53,6 @@
 
                 <div class="clearfix fr zi100" v-for="(food,i) in item.foods" :key="i">
                   <span class="goods_img fl">
-                    <!-- src="https://cube.elemecdn.com/d/90/d002c62a316875699e202edb43888jpeg.jpeg" -->
                     <img :src="menuImgurl(food.image_path)" alt @click="buyFood(index,i)" />
                   </span>
                   <div class="fl goods_main">
@@ -131,10 +130,10 @@ export default {
     };
   },
   created() {
-    this.load();
+    this.showLoad();
   },
   methods: {
-    load() {
+    showLoad() {
       let hash = window.location.hash.split("?")[1];
       let hash_id = hash.split("=")[1];
       Axios.get("http://localhost:3000/batch_shop?" + hash_id).then(
@@ -181,7 +180,7 @@ export default {
       if (this.foods.length) {
         for (let i = 0; i < this.foods.length; i++) {
           if (this.foods[i].item_id == food.item_id) {
-            window.console.log(this.foods[i].item_id, food.item_id);
+            // window.console.log(this.foods[i].item_id, food.item_id);
             this.foods[i].number += 1;
             break;
           }
@@ -202,6 +201,7 @@ export default {
     },
     toCart() {
       // let now = new Date().getTime();
+      // window.console.log
       this.$store.dispatch("setFoods", this.foods);
       window.location.href = "http://localhost:8081/#/main/submit";
     }
@@ -227,7 +227,7 @@ export default {
           // });
         });
 
-        window.console.log(this.toptop, val);
+        // window.console.log(this.toptop, val);
       }
     }
   },

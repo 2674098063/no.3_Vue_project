@@ -156,7 +156,6 @@ export default {
             this.list.splice(index, 1);
           }
         });
-        window.console.log(this.list);
         document.querySelector(".addressUpdata").style.top = "100%";
       } else {
         document.querySelector(".addressEdit").style.top = "100%";

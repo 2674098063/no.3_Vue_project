@@ -1,5 +1,7 @@
 <template>
   <div>
+    <van-icon name="arrow-left" class="returnBtn" @click="returnSetting" />
+
     <div class="logo">
       <h3>这是个logo</h3>
     </div>
@@ -31,7 +33,11 @@
         :loading="isloading"
         loading-type="spinner"
       >登陆</van-button>
-      <p class="prompt mark">登陆即为已同意《服务协议》和《隐私政策》</p>
+      <p class="prompt mark">
+        登陆即为已同意
+        <a href="javascript:0">《服务协议》</a>和
+        <a href="javascript:0">《隐私政策》</a>
+      </p>
     </div>
   </div>
 </template>
@@ -114,13 +120,26 @@ export default {
             }
           });
       }
+    },
+    returnSetting() {
+      window.location.href = "http://localhost:8081/#/main/setting/index";
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+.returnBtn {
+  display: block;
+  background: #eee;
+  font-size: 34px;
+  color: #0085fb;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
 .logo {
   position: absolute;
+  top: 50px;
   left: 50%;
   transform: translateX(-50%);
   width: 160px;
@@ -130,7 +149,7 @@ export default {
 }
 .loginbox {
   position: absolute;
-  top: 30%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   margin: auto;

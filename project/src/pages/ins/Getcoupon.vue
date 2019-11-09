@@ -27,8 +27,15 @@ export default {
     onChange(index) {
       this.chosenCoupon = index;
     },
-    onExchange() {
-      this.coupons.push();
+    onExchange(code) {
+      this.$axios
+        .get("http://localhost:3000/getcoupon?code=" + code)
+        .then(({ data }) => {
+          let arr = data[0].condition.split("\\n");
+          data[0].condition = arr[0] + "\n" + arr[1];
+          this.coupons.push(data[0]);
+          // window.console.log(data[0]);
+        });
     },
     getcoupon() {
       this.$axios.get("http://localhost:3000/coupon").then(({ data }) => {

@@ -59,26 +59,6 @@ router.get('/batch_shop', async function(req, res, next) {
     }
 
 });
-// router.get('/reg', upload.array(), (req, res) => {
-//     var { name, psw } = req.body;
-//     console.log(name, psw);
-//     if (name == 'fxxy' && psw == 'fxxy') {
-//         res.send('1');
-//     } else {
-//         res.send('0');
-//     }
-// });
-
-
-// app.post('/user', upload.array(), async function(req, res, next) {
-//     res.append('Access-Control-Allow-Origin', '*');
-//     var { tel, password } = req.body;
-//     let str = await find('user', {
-//         name: tel
-//     });
-//     console.log(str);
-//     res.json(data);
-// });
 
 
 router.post('/user', upload.array(), async(req, res) => {
@@ -138,6 +118,17 @@ router.get('/coupon', async function(req, res, next) {
     src = src.split('?');
     res.append('Access-Control-Allow-Origin', '*');
     let data = await find('coupon', null);
+    res.json(data);
+});
+router.get('/getcoupon', async function(req, res, next) {
+    let src = req.originalUrl;
+    src = src.split('?');
+    let arr = src[1].split('=');
+    console.log(arr[1])
+    res.append('Access-Control-Allow-Origin', '*');
+    let data = await find('coupon', {
+        value: arr[1]
+    });
     res.json(data);
 });
 

@@ -59,7 +59,6 @@ export default new Vuex.Store({
             state.batch_shop = {...data }
         },
         setFoods(state, data) {
-            state.foods.length = 0;
             state.foods = data
         }
     },
